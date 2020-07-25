@@ -17,9 +17,6 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.301
-        source-url: https://nuget.pkg.github.com/lTimeless/index.json
-        env:
-          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}   
     - name: Install dependencies
       run: dotnet restore
     - name: Build
@@ -30,5 +27,3 @@ jobs:
       run: dotnet pack --output nuget-packages --configuration Release
     - name: Push with dotnet
       run: dotnet nuget push nuget-packages/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
-    - name: Push to github
-      run: dotnet nuget push nuget-packages/*.nupkg --source "github"
