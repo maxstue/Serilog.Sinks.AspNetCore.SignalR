@@ -1,4 +1,4 @@
-name: Serilog.Sink.Signalr Nuget Package
+name: Github Actions
 
 on:
   push:
