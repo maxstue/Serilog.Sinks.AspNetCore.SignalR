@@ -1,6 +1,6 @@
 # Serilog.Sinks.AspNetCore.SignalR
 
-![Github Actions](https://github.com/lTimeless/Serilog.Sinks.AspNetCore.SignalR/workflows/Serilog.Sink.Signalr%20Nuget%20Package/badge.svg)
+![Github Actions](https://github.com/lTimeless/Serilog.Sinks.AspNetCore.SignalR/workflows/Github%20Actions/badge.svg)
 ![Nuget](https://img.shields.io/nuget/v/Serilog.Sinks.AspNetCore.SignalR)
 
 A Serilog sink that writes events as string or object to the given SignalR Hub.
