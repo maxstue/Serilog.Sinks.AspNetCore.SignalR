@@ -30,58 +30,75 @@ An example setup is as follows:
 
 .Net core
 ```csharp 
+{...}
 var hub = ServiceProvider.GetService<IHubContext<MyOwnExampleHub, IExampleHub>>(); // or IHub
 
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.SignalRSink(
-        hub,
-        formatProvider: new CustomFormatProvider(),
-        groups: new [] { "group1", },
-        userIds: new [] { "user2", },
-        excludedConnectionIds: new [] { "1", }
+    .WriteTo.SignalRSink<MyOwnExampleHub, IExampleHub>(
+        LogEventLevel.Information,
+        service,
+        new MyCustomProvider(), // can be null
+        new string[] {},        // can be null
+        new string[] {},        // can be null
+        new string[] {},        // can be null
+        false);                 // false is the default value
     )
     .CreateLogger();
-[...]
+{...}
 
 ```
 
 Asp.Net core (3)
 ```csharp
 // In Programm.cs -> CreateHostBuilder method
+{...}
 private static IHostBuilder CreateHostBuilder(string[] args) =>
-			Host.CreateDefaultBuilder(args)
-				.ConfigureWebHostDefaults(webBuilder =>
-				{
-					webBuilder.UseStartup<Startup>();
-				})
-				.UseSerilog((hostingContext, service, loggerConfig) =>
-				{
-					loggerConfig
-						.ReadFrom.Configuration(hostingContext.Configuration)
-						.Enrich.FromLogContext()
-						.Enrich.WithProcessId()
-						.WriteTo.SignalRSink<MyOwnExampleHub, IExampleHub>(
-              LogEventLevel.Information,
-							service,
-							new MyCustomProvider(), // can be null
-							new string[] {}, // can be null
-							new string[] {}, // can be null
-							new string[] {}, // can be null
-							false); // false is the default value
-				});
+    Host.CreateDefaultBuilder(args)
+        .ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseStartup<Startup>();
+        })
+        .UseSerilog((hostingContext, service, loggerConfig) =>
+        {
+            loggerConfig
+                .ReadFrom.Configuration(hostingContext.Configuration)
+                .Enrich.FromLogContext()
+                .Enrich.WithProcessId()
+                .WriteTo.SignalRSink<MyOwnExampleHub, IExampleHub>(
+                    LogEventLevel.Information,
+                    service,
+                    new MyCustomProvider(), // can be null
+                    new string[] {},        // can be null
+                    new string[] {},        // can be null
+                    new string[] {},        // can be null
+                    false);                 // false is the default value
+        });
+{...}
         
-// In Startup.cs -> Configure method      
+// In Startup.cs -> Configure method   
+{...}   
 app.UseEndpoints(endpoints =>
-			{
-				endpoints.MapControllerRoute(
-					name: "default",
-					pattern: "{controller}/{action=Index}/{id?}");
-
-				endpoints.MapHub<EventHub>("/api/hub");
-				endpoints.MapHub<LogHub>("/api/hub/logs");
-			});
+    {
+        endpoints.MapControllerRoute(
+            name: "default",
+            pattern: "{controller}/{action=Index}/{id?}");
+    
+        endpoints.MapHub<LogHub>("<yourPath>");
+    });
+{...}
 
 ```
+#### Send methods
+With `SendLogAsString` you can send a message as a string formatted like:
+```charp
+$"{logEvent.Timestamp:dd.mm.yyyy HH:mm:ss.fff} {logEvent.Level.ToString()} {logEvent.RenderMessage(_formatProvider)} {logEvent.Exception?.ToString() ?? "-"}"
+//example:  25.07.2020 20:07:23:111 Information This is my test message you write into any logger -
+```
+With `SendLogAsObject` you can send a message as an object formatted like:
+```
+new { id, timestamp, level, message, exception}
+```
+The object has the same logevent properties and also an id prop so frontends can iterate over it while having a unique key for every entry.
 
 
 ### Receive the log events
@@ -91,7 +108,7 @@ In the client code, subscribe to the `SendLogAsString` or `SendLogAsObject` meth
 C#
 ```csharp
 var connection = new HubConnectionBuilder()
-    .WithUrl("<yourURL>")
+    .WithUrl("<yourPath>")
     .Build()
 
 connection.On<string>("SendLogAsString", (string message) => {
@@ -102,7 +119,7 @@ connection.On<string>("SendLogAsString", (string message) => {
 Javascript / Typescript
 ```js 
 this.connection = new HubConnectionBuilder()
-      .withUrl('<yourURL>')
+      .withUrl('<yourPath>')
       .configureLogging(LogLevel.Information)
       .build();
       
