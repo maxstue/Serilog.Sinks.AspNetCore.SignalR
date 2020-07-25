@@ -106,11 +106,12 @@ namespace Serilog.Sinks.AspNetCore.SignalR
                 }
                 else
                 {
+                    var id = Guid.NewGuid().ToString();
                     var timestamp = logEvent.Timestamp.ToString("dd.mm.yyyy HH:mm:ss.fff");
                     var level = logEvent.Level.ToString();
                     var message = logEvent.RenderMessage(_formatProvider);
                     var exception = logEvent.Exception?.ToString() ?? "-";
-                    target.SendLogAsObject(new { timestamp, level, message, exception});
+                    target.SendLogAsObject(new { id, timestamp, level, message, exception});
                 }
             }
 
