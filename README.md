@@ -1,0 +1,1 @@
+# Serilog.Sinks.AspNetCore.SignalR
