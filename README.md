@@ -3,7 +3,7 @@
 ![Github Actions](https://github.com/lTimeless/Serilog.Sinks.AspNetCore.SignalR/workflows/Github%20Actions/badge.svg)
 ![Nuget](https://img.shields.io/nuget/v/Serilog.Sinks.AspNetCore.SignalR)
 
-A Serilog sink that writes events as string or object to the given SignalR Hub.
+A Serilog sink that writes logs as a string or an object to the given SignalR Hub.
 
 I was Inspired by [serilog-sinks-signalr-core](https://github.com/DrugoLebowski/serilog-sinks-signalr-core) and [serilog-sinks-signalr](https://github.com/serilog/serilog-sinks-signalr), I decided to write my own because non of both worked for me. I always got a Stackoverflow in an Asp.net core 3 application.
 
