@@ -5,13 +5,13 @@
 
 A Serilog sink that writes logs as a string or an object to the given SignalR Hub.
 
-I was Inspired by [serilog-sinks-signalr-core](https://github.com/DrugoLebowski/serilog-sinks-signalr-core) and [serilog-sinks-signalr](https://github.com/serilog/serilog-sinks-signalr), I decided to write my own because non of both worked for me. I always got a Stackoverflow in an Asp.net core 3 application.
+I was Inspired by [serilog-sinks-signalr-core](https://github.com/DrugoLebowski/serilog-sinks-signalr-core) and [serilog-sinks-signalr](https://github.com/serilog/serilog-sinks-signalr), I decided to write my own because non of both worked for me. I always got an errir in an Asp.net core 3 application.
 
 ## Support
 If you encounter any problems or have any suggestions, please help me fix/implement the solution by creating an [issue](https://github.com/lTimeless/Serilog.Sinks.AspNetCore.SignalR/issues)
 
 ## Usage and configuration
-> __[Update 22.10]__ This also works with .net 5. Th eimplementation is the same!
+> __[Update 02.12]__ This also works with .net 5. The implementation is the same!
 
 The hub you want to use with the Sink must inherit from Hub<IHub> or an interface which inherits from it. 
 To have the services in the "UseSerilog(....)" method you __need__ to install the package "Serilog.Extensions.Hosting"
