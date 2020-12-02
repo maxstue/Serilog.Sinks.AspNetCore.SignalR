@@ -11,7 +11,7 @@ I was Inspired by [serilog-sinks-signalr-core](https://github.com/DrugoLebowski/
 If you encounter any problems or have any suggestions, please help me fix/implement the solution by creating an [issue](https://github.com/lTimeless/Serilog.Sinks.AspNetCore.SignalR/issues)
 
 ## Usage and configuration
-> __[Update 22.10]__ This also works with .net 5 RC2. Th eimplementation is the same!
+> __[Update 22.10]__ This also works with .net 5. Th eimplementation is the same!
 
 The hub you want to use with the Sink must inherit from Hub<IHub> or an interface which inherits from it. 
 To have the services in the "UseSerilog(....)" method you __need__ to install the package "Serilog.Extensions.Hosting"
