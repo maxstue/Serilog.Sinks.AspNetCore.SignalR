@@ -62,7 +62,9 @@ namespace Serilog.Sinks.AspNetCore.SignalR
             {
                 throw new ArgumentNullException(nameof(logEvent));
             }
-            _hubContext = _serviceProvider.GetRequiredService<IHubContext<THub, T>>();
+            if(_hubContext == null) {
+                _hubContext = _serviceProvider.GetRequiredService<IHubContext<THub, T>>();
+            }
             var targets = new List<T>();
 
             if (_groups.Any())
