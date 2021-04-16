@@ -62,7 +62,9 @@ namespace Serilog.Sinks.AspNetCore.SignalR
             {
                 throw new ArgumentNullException(nameof(logEvent));
             }
-            _hubContext = _serviceProvider.GetRequiredService<IHubContext<THub, T>>();
+            if(_hubContext == null) {
+                _hubContext = _serviceProvider.GetRequiredService<IHubContext<THub, T>>();
+            }
             var targets = new List<T>();
 
             if (_groups.Any())
@@ -99,7 +101,7 @@ namespace Serilog.Sinks.AspNetCore.SignalR
             {
                 if (_sendAsString)
                 {
-                    target.SendLogAsString($"{logEvent.Timestamp:dd.mm.yyyy HH:mm:ss.fff} " +
+                    target.SendLogAsString($"{logEvent.Timestamp:dd.MM.yyyy HH:mm:ss.fff} " +
                                            $"{logEvent.Level.ToString()} " +
                                            $"{logEvent.RenderMessage(_formatProvider)} "+
                                            $"{logEvent.Exception?.ToString() ?? "-"} ");
@@ -107,7 +109,7 @@ namespace Serilog.Sinks.AspNetCore.SignalR
                 else
                 {
                     var id = Guid.NewGuid().ToString();
-                    var timestamp = logEvent.Timestamp.ToString("dd.mm.yyyy HH:mm:ss.fff");
+                    var timestamp = logEvent.Timestamp.ToString("dd.MM.yyyy HH:mm:ss.fff");
                     var level = logEvent.Level.ToString();
                     var message = logEvent.RenderMessage(_formatProvider);
                     var exception = logEvent.Exception?.ToString() ?? "-";

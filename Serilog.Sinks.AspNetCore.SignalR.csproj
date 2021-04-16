@@ -2,11 +2,11 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <PackageVersion>0.3.8</PackageVersion>
+        <PackageVersion>0.3.9</PackageVersion>
         <PackageId>Serilog.Sinks.AspNetCore.SignalR</PackageId>
         <Title>Serilog.Sinks.AspNetCore.SignalR</Title>
         <Authors>Maximilian Stümpfl</Authors>
-        <Description>This is a Serilog Sink for Asp.net core 3, to send logs over SignalR</Description>
+        <Description>This is a Serilog Sink for .net core 3 and .Net 5, to send logs over SignalR</Description>
         <RepositoryUrl>https://github.com/lTimeless/Serilog.Sinks.AspNetCore.SignalR</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>Serilog, SignalR, Sinks</PackageTags>
